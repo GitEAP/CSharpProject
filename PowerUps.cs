@@ -6,8 +6,8 @@ public class PowerUps {
     public void RunPowerUp() {
         Console.WriteLine("PowerUps Ran");
     }
-    public void RechargePowerUp() {
-        power += power;
+    public void RechargePowerUp(int _power) {
+        power += _power;
         Console.WriteLine("Recharge PowerUps to " + power);
     }
 }

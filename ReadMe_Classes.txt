@@ -1,0 +1,5 @@
+Classes are like factories. They hold the boxes and machines. The class is a container for variables and functions. The name of the class has to be the same as the name of the file. Classes are an organizational tool. Classes should only do one task. By doing this scripts become easier to manage, easier to read, and more efficient to write. An instance of a class is an object. The name of a constructor is always the same as the name of the class. Constructors never have a return type. You can have multiple constructors with the same name but different parameters.
+
+The scope of a variable is the area in code which the variable can be used in. A variable is local when it's placed in an area where it can be used. Code blocks define a variables scope. Code blocks are denoted by braces. Code inside a class is local to that class. An access modifier is a keyword placed before a data type when declaring the variable and it's used to determine if the variable or function can be seen. If code needs to access other code, then it should be public. If it's public it means it can be editable on the component in the inspector.
+
+

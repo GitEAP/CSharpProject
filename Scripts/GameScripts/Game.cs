@@ -1,6 +1,7 @@
 using System;
 public class Game
 {
+    public static bool canPlay = true;
 
     public Game()
     {
@@ -8,6 +9,7 @@ public class Game
         Health.message = "You are getting stronger.";
         Ammo.message = "You have more ammo.";
         Cave.StartMessage = "You have entered a cave.";
+        UnderWater.objects = new string[] {"Sea weed", "Coral", "Fish", "Shark"};
     }
     //Runs at the start of the game
     public void Start()
@@ -15,20 +17,28 @@ public class Game
         Console.WriteLine("Please type in your name.");
         name = Console.ReadLine();
         Console.WriteLine("Your player name is: " + name);
-        while(Program.canPlay) {
-            System.Threading.Thread.Sleep(5000);
-            Walk();
-        }
-    }
-    
-    private void Walk() {
-        Random randomNum = new Random();
         Cave.Enter();
+        while (Game.canPlay)
+        {
+            GameTimer();
+            Play();
+        }
+        Console.WriteLine("You died");
+        Console.WriteLine("Game Over");
+    }
+
+    private void Play() {
+        Random randomNum = new Random();
         Cave.Encounter(randomNum.Next(0, Cave.objects.Length));
+    }
+
+    public static void GameTimer() {
+        System.Threading.Thread.Sleep(5000);
     }
 
     //Game Levels
     private LevelBase Cave = new LevelBase();
+    public static LevelBase UnderWater = new LevelBase();
 
     //Game PowerUps
     public PowerUpBase Health = new PowerUpBase();

@@ -9,7 +9,7 @@ public class Game
         Health.message = "You are getting stronger.";
         Ammo.message = "You have more ammo.";
         Cave.StartMessage = "You have entered a cave.";
-        UnderWater.objects = new string[] {"Sea weed", "Coral", "Fish", "Shark"};
+        UnderWater.objects = new string[] { "Sea weed", "Coral", "Fish", "Shark" };
     }
     //Runs at the start of the game
     public void Start()
@@ -26,30 +26,36 @@ public class Game
         Console.WriteLine("You died");
         Console.WriteLine("Game Over");
     }
-    public string gameState;
 
-    private void Play() {
-        Console.WriteLine("Play commands: play, end, help");
-        gameState = Console.ReadLine();
-        if (gameState == "end")
+    private void Play()
+    {
+        Console.WriteLine("Play commands: Play, End, Help");
+        
+
+        switch (GameState.currentGameState)
         {
-            Console.WriteLine("Game Over");
-            Environment.Exit(0);
-        }
-        if (gameState == "help") {
-            Console.WriteLine("What do your need help for. If you can't play this game, you have issues.");
+            case GameState.GameStates.End:
+                Console.WriteLine("Game Over");
+                Environment.Exit(0);
+                break;
+            case GameState.GameStates.Help:
+                Console.WriteLine("What do your need help for. If you can't play this game, you have issues.");
+                Play();
+                break;
+            case GameState.GameStates.Play:
+
+                break;
+            default:
+            Console.WriteLine("Not a valid command");
             Play();
-        }
-        if (gameState != "help" && gameState != "play" && gameState != "end")
-        {
-            Console.WriteLine(gameState + " is not a valid command");
-            Play();
+            break;
         }
         Random randomNum = new Random();
         Cave.Encounter(randomNum.Next(0, Cave.objects.Length), "walked");
     }
 
-    public static void GameTimer() {
+    public static void GameTimer()
+    {
         System.Threading.Thread.Sleep(5000);
     }
 

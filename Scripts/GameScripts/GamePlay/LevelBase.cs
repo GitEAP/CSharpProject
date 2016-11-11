@@ -3,10 +3,9 @@ public class LevelBase {
     public WeaponBase M16 = new WeaponBase();
 
     public string StartMessage;
-
     public bool entranceOpen = true;
-    public string[] environment = {"Cold", "Wet", "Dark"};
-    public string[] objects = {"Rocks", "Ravine", "River", "Lava"};
+    public string[] environment;
+    public string[] objects;
 
     public void Enter() {
         Console.WriteLine(StartMessage);
@@ -34,12 +33,8 @@ public class LevelBase {
 
             case 3:
                 //Danger kills us and ends the game
-                Console.WriteLine("You've walked into " + objects[i]);
-                if (objects[i] == "Shark")
-                {
-                    M16.SemiAutoFire();
-                }
-                Game.canPlay = false;
+                Console.WriteLine("You've " + travel + " into " + objects[i]);
+                GameState.currentGameState = GameState.GameStates.Died;
                 break;
 
             default:

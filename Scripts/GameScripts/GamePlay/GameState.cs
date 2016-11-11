@@ -4,6 +4,7 @@ public class GameState {
         Play,
         Walk,
         Fight,
+        Died,
         Help,
         End   
     }

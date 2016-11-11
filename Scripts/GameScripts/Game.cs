@@ -11,29 +11,29 @@ public class Game
         Cave.StartMessage = "You have entered a cave.";
         UnderWater.objects = new string[] { "Sea weed", "Coral", "Fish", "Shark" };
     }
-    //Runs at the start of the game
-    public void Start()
+    private string gameState = "Start";
+    private GameState.GameStates toEnum;
+    public void Play()
     {
-        Console.WriteLine("Please type in your name.");
-        name = Console.ReadLine();
-        Console.WriteLine("Your player name is: " + name);
-        Cave.Enter();
-        while (Game.canPlay)
-        {
-            GameTimer();
-            Play();
-        }
-        Console.WriteLine("You died");
-        Console.WriteLine("Game Over");
-    }
 
-    private void Play()
-    {
-        Console.WriteLine("Play commands: Play, End, Help");
-        
-
-        switch (GameState.currentGameState)
+        switch (toEnum)
         {
+            case GameState.GameStates.Start:
+                Console.WriteLine("Please type in your name.");
+                name = Console.ReadLine();
+                Console.WriteLine("Your player name is: " + name);
+                Console.WriteLine("Play commands: Play, End, Help");
+                gameState = Console.ReadLine();
+                if (Enum.TryParse(gameState, out toEnum))
+                {
+                    Play();
+                }
+                break;
+            case GameState.GameStates.Died:
+                Console.WriteLine("You Died");
+                GameState.currentGameState = GameState.GameStates.End;
+                Environment.Exit(0);
+                break;
             case GameState.GameStates.End:
                 Console.WriteLine("Game Over");
                 Environment.Exit(0);
@@ -43,15 +43,21 @@ public class Game
                 Play();
                 break;
             case GameState.GameStates.Play:
-
+                while (Game.canPlay)
+                {
+                    Cave.Enter();
+                    Random randomNum = new Random();
+                    Cave.Encounter(randomNum.Next(0, Cave.objects.Length), "walked");
+                    GameTimer();
+                    Play();
+                }
                 break;
             default:
-            Console.WriteLine("Not a valid command");
-            Play();
-            break;
+                Console.WriteLine("Not a valid command");
+                Play();
+                break;
         }
-        Random randomNum = new Random();
-        Cave.Encounter(randomNum.Next(0, Cave.objects.Length), "walked");
+
     }
 
     public static void GameTimer()
@@ -60,7 +66,7 @@ public class Game
     }
 
     //Game Levels
-    private LevelBase Cave = new LevelBase();
+    private LevelBase Cave = new CaveLevel();
     public static LevelBase UnderWater = new LevelBase();
 
     //Game PowerUps
